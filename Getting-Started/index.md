@@ -27,7 +27,7 @@ bin/dev                                                                 # web + 
 
 `bin/dev` runs the web server, the JS/CSS watchers, the Solid Queue worker, and the terminal broadcast daemon (see `Procfile.dev`).
 
-Then open <http://localhost:3000>, create a workflow in the editor, and trigger it. Copy `.env.example` to `.env` and fill in the required values (`DATABASE_URL`, `RAILS_MASTER_KEY`, `ANTHROPIC_API_KEY`) first; the rest are optional. See [Configuration](Configuration) for the full list of environment variables.
+Then open <http://localhost:3000>, create a workflow in the editor, and trigger it. Copy `.env.example` to `.env` and fill in the required values (`DATABASE_URL`, `RAILS_MASTER_KEY`, `ANTHROPIC_API_KEY`) first; the rest are optional. See [Configuration](../Configuration/index.md) for the full list of environment variables.
 
 ## Your First Workflow
 
@@ -38,6 +38,6 @@ Then open <http://localhost:3000>, create a workflow in the editor, and trigger 
 5. **Run it.** Hit **Run**. Watch the live terminal stream as the agent works. When it finishes, the workflow advances along the node's edges (or ends).
 6. **Iterate.** Add a **shell** node before the AI node to set things up (checkout, install), an **approval** node after it to gate merges, or a failure edge to a notification step.
 
-For what each node does in depth, see [Node Types](Node-Types).
+For what each node does in depth, see [Node Types](../Building-Workflows/Node-Types.md).
 
 > **Prompt for a clean finish:** start with a tiny, unambiguous prompt that ends in "and stop" so the first run finishes cleanly, then grow from there.

@@ -56,7 +56,7 @@ mode = "restricted"
 - **Default to allowlist in production.** It is the single biggest lever on blast radius and credential safety; reserve `open` for experimentation.
 - **Include DNS in allowlists.** Add `8.8.8.8` and `1.1.1.1` (or your resolver) so name resolution works.
 - **One profile per external service.** Keep focused profiles (a GitHub profile, an internal-API profile) and compose your fleet by assigning the right one per node.
-- **Pair with `forward_env`.** The network policy limits where a run can talk; `forward_env` (also in the profile) limits which secrets it even has. See [Configuration](Configuration) for how the env-var store and `forward_env` work. Use both for credential-sensitive automation.
+- **Pair with `forward_env`.** The network policy limits where a run can talk; `forward_env` (also in the profile) limits which secrets it even has. See [Configuration](index.md) for how the env-var store and `forward_env` work. Use both for credential-sensitive automation.
 
 ## Notes
 

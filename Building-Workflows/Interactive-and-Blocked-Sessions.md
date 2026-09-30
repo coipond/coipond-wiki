@@ -20,4 +20,4 @@ When an `ai` node hits something it genuinely cannot decide, the session flips t
 
 An **approval** node is an explicit gate that pauses the workflow until someone clicks through. The session goes `pending_approval` and waits for an explicit approve or reject; the node shows its `approval_message` while it waits. Put one before anything irreversible, such as a merge or a deploy.
 
-Together, blocked sessions and approval nodes keep unattended runs safe: the agent proceeds on its own until it hits genuine ambiguity or a guarded step, then waits for you. For where these node types sit in the graph, see [Node Types](Node-Types).
+Together, blocked sessions and approval nodes keep unattended runs safe: the agent proceeds on its own until it hits genuine ambiguity or a guarded step, then waits for you. For where these node types sit in the graph, see [Node Types](Node-Types.md).

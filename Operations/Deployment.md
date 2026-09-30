@@ -10,4 +10,4 @@ The control plane needs no Incus of its own, so it can run on a bare host, in Do
 
 Worker nodes each run the per-node agent, a Solid Queue worker scoped to their queues, and a Falcon web process for terminal streaming.
 
-For the full process layout (`Procfile.controlplane`, the per-node processes) and the coi-container control-plane setup, see [Running Across Multiple Machines](Multiple-Machines).
+For the full process layout (`Procfile.controlplane`, the per-node processes) and the coi-container control-plane setup, see [Running Across Multiple Machines](Multiple-Machines.md).

@@ -17,4 +17,4 @@ bundle exec yard-lint                             # docs lint
 
 CI runs the full suite plus RuboCop, yard-lint, Brakeman, bundler-audit, and a gitleaks secret scan on every push and pull request.
 
-For the security properties these checks back up, see [Security](Security).
+For the security properties these checks back up, see [Security](Security.md).

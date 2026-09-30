@@ -19,4 +19,4 @@ These are the building blocks CoiPond composes: workflows and their nodes, the t
 </tbody>
 </table>
 
-See also [Node Types](Node-Types) for what each node does in depth, [Triggers](Triggers) for how workflows start, and [Workflows](Workflows) for the routing mechanics.
+See also [Node Types](../Building-Workflows/Node-Types.md) for what each node does in depth, [Triggers](../Building-Workflows/Triggers.md) for how workflows start, and [Workflows](../Building-Workflows/Workflows.md) for the routing mechanics.

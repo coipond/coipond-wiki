@@ -9,4 +9,4 @@ CoiPond exposes a set of admin surfaces for system health, fleet state, per-node
 - <code>/admin/nodes/&lt;node&gt;/top</code> - per-node "coi top": live container and process resource usage for that node.
 - <code>/jobs</code> - the Mission Control dashboard for Solid Queue (basic-auth protected).
 
-For fleet operations, draining nodes, and how the registry reports health across machines, see [Running Across Multiple Machines](Multiple-Machines).
+For fleet operations, draining nodes, and how the registry reports health across machines, see [Running Across Multiple Machines](Multiple-Machines.md).

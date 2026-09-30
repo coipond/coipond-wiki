@@ -38,4 +38,4 @@ A few concrete things people build with CoiPond, and how they map to workflow no
 - **Multi-machine ready** - scale from one box to a fleet of worker nodes sharing one database, with no change to how you author workflows.
 - **Live terminals and visibility** - real-time xterm.js terminal streaming over SSE, admin status and per-node resource views, and centralized error tracking.
 
-For the mechanics behind all of this, see [How It Works](How-It-Works), and to set it up see [Getting Started](Getting-Started).
+For the mechanics behind all of this, see [How It Works](How-It-Works.md), and to set it up see [Getting Started](index.md).

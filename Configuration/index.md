@@ -53,7 +53,7 @@ Copy `.env.example` and edit. The essentials:
 </tbody>
 </table>
 
-> **Multi-machine variables live elsewhere:** `COIPOND_NODE`, `COIPOND_QUEUES`, `COIPOND_PUBLIC_URL`, and `COIPOND_PUBLIC_PORT` are covered in [Running Across Multiple Machines](Multiple-Machines). On a single machine you do not need any of them.
+> **Multi-machine variables live elsewhere:** `COIPOND_NODE`, `COIPOND_QUEUES`, `COIPOND_PUBLIC_URL`, and `COIPOND_PUBLIC_PORT` are covered in [Running Across Multiple Machines](../Operations/Multiple-Machines.md). On a single machine you do not need any of them.
 
 ## Secrets That Reach The Container
 
@@ -63,8 +63,8 @@ CoiPond does **not** blanket-forward the host environment into session container
 - the internal `COIPOND_*` control-plane variables, and
 - exactly the variables named in the profile's `forward_env` allow-list, whose **values** come from CoiPond's own env-var store (a single flat namespace of name -> encrypted value).
 
-So a secret is only ever visible to a session if a profile explicitly opts its name in. Nothing else from the host process crosses the boundary. Store the value once in CoiPond's env-var UI, and list its **name** in the `forward_env` of the profiles that should have it. Access is decided by **which profile a node picks**, not by the workflow. See [Network Profiles](Network-Profiles) for how `forward_env` pairs with the network policy in the same coi profile.
+So a secret is only ever visible to a session if a profile explicitly opts its name in. Nothing else from the host process crosses the boundary. Store the value once in CoiPond's env-var UI, and list its **name** in the `forward_env` of the profiles that should have it. Access is decided by **which profile a node picks**, not by the workflow. See [Network Profiles](Network-Profiles.md) for how `forward_env` pairs with the network policy in the same coi profile.
 
 ## Job Queues
 
-CoiPond separates jobs by whether they touch a container/Incus, so a control plane with no Incus can run a worker without ever being handed a job it cannot execute. `COIPOND_QUEUES` controls which queues a worker consumes; unset means "all queues" (correct for one machine). See [Running Across Multiple Machines](Multiple-Machines) for the full queue model.
+CoiPond separates jobs by whether they touch a container/Incus, so a control plane with no Incus can run a worker without ever being handed a job it cannot execute. `COIPOND_QUEUES` controls which queues a worker consumes; unset means "all queues" (correct for one machine). See [Running Across Multiple Machines](../Operations/Multiple-Machines.md) for the full queue model.

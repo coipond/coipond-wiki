@@ -16,7 +16,7 @@ An **execution is pinned to the node that first ran it**, because its workspace 
 
 1. **Trigger fires** - a cron tick, an inbound webhook, the completion of another workflow, or a manual click creates a workflow **execution**.
 2. **Placement** - the execution claims a free **slot** (lane) on a node. Slots cap how many runs a workflow can have in flight; excess triggers queue.
-3. **Container up** - the owning node renders a per-session [coi profile](How-CoiPond-Uses-Coi) and starts an Incus container with `coi shell`, binding the execution's workspace to `/workspace`.
+3. **Container up** - the owning node renders a per-session [coi profile](../Internals/How-CoiPond-Uses-Coi.md) and starts an Incus container with `coi shell`, binding the execution's workspace to `/workspace`.
 4. **Agent launch** - CoiPond asks the resolved agent adapter (or `coi` itself, for coi-native tools) for the exact launch command, then runs the agent inside a host-side `tmux` pane wrapping `coi container exec`.
 5. **Monitoring** - a per-node daemon tails the session's output and watches a filesystem "marker" directory for lifecycle signals: task done, a blocking question, an idle/crash backstop.
 6. **Human-in-the-loop (if needed)** - if the agent asks a question, the session flips to *blocked* and surfaces the prompt in the UI; an operator (or a configured rule) answers, and the session resumes.
@@ -25,4 +25,4 @@ An **execution is pinned to the node that first ran it**, because its workspace 
 
 ## Isolation
 
-Every session gets its own Incus container. CoiPond never talks to `incus` directly - it shells out to the **`coi`** CLI for every container operation. What a container can see is decided per session by a coi profile (a TOML document): which image to boot, what to mount, the [network policy](Network-Profiles), git identity, timezone, and agent/tool settings. This means the blast radius of any single agent run is one disposable container with exactly the access you granted it.
+Every session gets its own Incus container. CoiPond never talks to `incus` directly - it shells out to the **`coi`** CLI for every container operation. What a container can see is decided per session by a coi profile (a TOML document): which image to boot, what to mount, the [network policy](../Configuration/Network-Profiles.md), git identity, timezone, and agent/tool settings. This means the blast radius of any single agent run is one disposable container with exactly the access you granted it.

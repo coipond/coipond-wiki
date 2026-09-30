@@ -24,4 +24,4 @@ There is also a generic endpoint, `POST /api/webhooks/ingest`, for a single shar
 
 ## Chaining and Workflow Call
 
-A workflow can trigger another on completion, letting you build larger pipelines out of smaller workflows. `Workflow#trigger_workflow` links one workflow to another, and a [workflow_call](Node-Types) node invokes another workflow directly. See [Workflows](Workflows) for fan-out, fan-in, and how the calling session waits on a batch of child runs.
+A workflow can trigger another on completion, letting you build larger pipelines out of smaller workflows. `Workflow#trigger_workflow` links one workflow to another, and a [workflow_call](Node-Types.md) node invokes another workflow directly. See [Workflows](Workflows.md) for fan-out, fan-in, and how the calling session waits on a batch of child runs.

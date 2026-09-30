@@ -9,10 +9,10 @@ A node is one step in a workflow, and its type decides what the step does and ho
 - **interactive** - launches an agent session meant for a human to drive from the live terminal. It stays open for you rather than running to completion on its own.
 - **approval** - a gate that pauses the workflow until someone approves in the UI. Put it before anything irreversible, such as a merge or a deploy. It shows `approval_message` while it waits.
 - **sleep** - a timed pause for backoff or for spacing out steps. It pauses for `duration_seconds` (default 60).
-- **trigger** - the entry point that carries the trigger configuration (manual, cron, or webhook). Set `is_entry_point: true`. See [Triggers](Triggers) for the full trigger model.
+- **trigger** - the entry point that carries the trigger configuration (manual, cron, or webhook). Set `is_entry_point: true`. See [Triggers](Triggers.md) for the full trigger model.
 - **workflow_call** - invokes another workflow as a sub-step, so you can compose reusable pipelines out of smaller workflows.
 
-Every non-terminal node has **success** and **failure** edges; wire them to route the run. For how `task_result` picks the edge, loops, and fan-out, see [Workflows](Workflows).
+Every non-terminal node has **success** and **failure** edges; wire them to route the run. For how `task_result` picks the edge, loops, and fan-out, see [Workflows](Workflows.md).
 
 > **Adding a type is self-contained:** drop a strategy module under `app/concepts/workflows/node_types/` and register it in `Workflows::NodeTypes::ALL`; nothing else needs to know.
 

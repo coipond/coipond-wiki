@@ -2,7 +2,7 @@
 
 A workflow is a directed graph of nodes. Each node runs as a session inside its own Incus container. When a node finishes it routes to `on_success_node` or `on_failure_node`, and the graph keeps walking until it hits a node with no outgoing edge. This page is the deep reference for how workflows behave.
 
-For the container and profile side see [How CoiPond Uses Coi](How-CoiPond-Uses-Coi); for network policy see [Network Profiles](Network-Profiles).
+For the container and profile side see [How CoiPond Uses Coi](../Internals/How-CoiPond-Uses-Coi.md); for network policy see [Network Profiles](../Configuration/Network-Profiles.md).
 
 ## Object Model
 
@@ -24,7 +24,7 @@ A workflow can have several triggers. Each fires an `Execution`, which spawns a 
 
 ## Triggers
 
-`trigger_mode` is one of the following. See [Triggers](Triggers) for the full trigger reference.
+`trigger_mode` is one of the following. See [Triggers](Triggers.md) for the full trigger reference.
 
 - **`scheduled`** - cron. `Triggers::CheckScheduled` picks up rows where `next_check_at <= now`.
 - **`webhook`** - every trigger gets a `webhook_token` on create, giving it a private URL at `POST /api/webhooks/trigger/:token`. There is also a generic receiver at `POST /api/webhooks/ingest`.
@@ -34,7 +34,7 @@ Workflows also chain: `Workflow#trigger_workflow` links one to another, and a `w
 
 ## Node Types
 
-Seven types, registered in `Workflows::NodeTypes::ALL`. Adding one means dropping a strategy module under `app/concepts/workflows/node_types/` and registering it there; nothing else needs to know. See [Node Types](Node-Types) for the per-type reference.
+Seven types, registered in `Workflows::NodeTypes::ALL`. Adding one means dropping a strategy module under `app/concepts/workflows/node_types/` and registering it there; nothing else needs to know. See [Node Types](Node-Types.md) for the per-type reference.
 
 <table>
 <thead>

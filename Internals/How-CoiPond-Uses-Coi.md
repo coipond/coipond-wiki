@@ -61,7 +61,7 @@ permission_mode = "bypass"
 code_user = "code"
 ```
 
-Add a `[network]` block to lock down egress - see [Network Profiles](Network-Profiles).
+Add a `[network]` block to lock down egress - see [Network Profiles](../Configuration/Network-Profiles.md).
 
 ## Commands Used
 
@@ -113,7 +113,7 @@ coi top --json [--procs]
 
 All of these are configured through the profile TOML (applied at `coi shell` launch), not separate post-boot flags:
 
-- **Network isolation** - firewalld/nftables enforcement from the profile's `[network]` section. Modes: open (no block), `restricted` (blocks RFC1918 plus metadata endpoint), `allowlist` (only `allowed_domains`). See [Network Profiles](Network-Profiles).
+- **Network isolation** - firewalld/nftables enforcement from the profile's `[network]` section. Modes: open (no block), `restricted` (blocks RFC1918 plus metadata endpoint), `allowlist` (only `allowed_domains`). See [Network Profiles](../Configuration/Network-Profiles.md).
 - **SSH agent forwarding** - coi forwards the host `SSH_AUTH_SOCK` into the container as a proxy device; CoiPond falls back to a DB-stored key only when no host agent is available.
 - **Resource limits** - CPU / memory / disk I/O / max-processes / tmpfs, from the profile's `[limits.*]`.
 - **Security hardening** - coi read-only-mounts host-auto-executing sinks (`.claude/settings.json`, `.git/config`, `.husky`) so a contained agent cannot plant a payload the host later runs; the profile's `[security]` can add more protected paths.
