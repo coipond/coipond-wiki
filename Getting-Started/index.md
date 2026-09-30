@@ -13,7 +13,8 @@ cargo install coi                        # coi (or grab a release binary)
 
 Prebuilt binaries: [coi releases](https://github.com/mensfeld/code-on-incus/releases/latest). CoiPond runs `coi` from `PATH`; override with `COI_BINARY_PATH`.
 
-> **Minimum coi version is `v0.12.0`:** or a `master` build that includes [#745](https://github.com/mensfeld/code-on-incus/pull/745). CoiPond relies on coi applying a profile's `[tool.*]` config - e.g. `[tool.claude] model` - as container-level env that our `coi container exec` inherits; on older coi it silently falls back to the tool default. The System Status page checks this and flags an out-of-date binary.
+!!! warning "Minimum coi version is `v0.12.0`"
+    or a `master` build that includes [#745](https://github.com/mensfeld/code-on-incus/pull/745). CoiPond relies on coi applying a profile's `[tool.*]` config - e.g. `[tool.claude] model` - as container-level env that our `coi container exec` inherits; on older coi it silently falls back to the tool default. The System Status page checks this and flags an out-of-date binary.
 
 You also need **PostgreSQL 18**. For development, `docker compose up -d` starts one (database only; the app itself runs via `bin/dev`).
 
@@ -40,4 +41,5 @@ Then open <http://localhost:3000>, create a workflow in the editor, and trigger 
 
 For what each node does in depth, see [Node Types](../Building-Workflows/Node-Types.md).
 
-> **Prompt for a clean finish:** start with a tiny, unambiguous prompt that ends in "and stop" so the first run finishes cleanly, then grow from there.
+!!! tip "Prompt for a clean finish"
+    start with a tiny, unambiguous prompt that ends in "and stop" so the first run finishes cleanly, then grow from there.

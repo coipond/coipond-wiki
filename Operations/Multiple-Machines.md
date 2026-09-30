@@ -87,7 +87,8 @@ foreman start -f Procfile.controlplane
 
 Persistence comes entirely from the persistent profile + `/workspace` storage.
 
-> **Validate the coi launch on a real host:** the coi launch, persistence, and port-publishing can't be exercised without Incus.
+!!! warning "Validate the coi launch on a real host"
+    the coi launch, persistence, and port-publishing can't be exercised without Incus.
 
 ## Trying It on One Machine (Fleet Mode)
 

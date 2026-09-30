@@ -53,7 +53,8 @@ Copy `.env.example` and edit. The essentials:
 </tbody>
 </table>
 
-> **Multi-machine variables live elsewhere:** `COIPOND_NODE`, `COIPOND_QUEUES`, `COIPOND_PUBLIC_URL`, and `COIPOND_PUBLIC_PORT` are covered in [Running Across Multiple Machines](../Operations/Multiple-Machines.md). On a single machine you do not need any of them.
+!!! note "Multi-machine variables live elsewhere"
+    `COIPOND_NODE`, `COIPOND_QUEUES`, `COIPOND_PUBLIC_URL`, and `COIPOND_PUBLIC_PORT` are covered in [Running Across Multiple Machines](../Operations/Multiple-Machines.md). On a single machine you do not need any of them.
 
 ## Secrets That Reach The Container
 

@@ -14,7 +14,8 @@ A node is one step in a workflow, and its type decides what the step does and ho
 
 Every non-terminal node has **success** and **failure** edges; wire them to route the run. For how `task_result` picks the edge, loops, and fan-out, see [Workflows](Workflows.md).
 
-> **Adding a type is self-contained:** drop a strategy module under `app/concepts/workflows/node_types/` and register it in `Workflows::NodeTypes::ALL`; nothing else needs to know.
+!!! note "Adding a type is self-contained"
+    drop a strategy module under `app/concepts/workflows/node_types/` and register it in `Workflows::NodeTypes::ALL`; nothing else needs to know.
 
 ## How Each Type Decides Success
 
@@ -35,7 +36,8 @@ Each type reports its outcome differently. An `ai` node writes a `task_done` mar
 </tbody>
 </table>
 
-> **Shell scripts live in the `prompt` column:** a `shell` node reads its script from the same `prompt` field an `ai` node uses for its task text.
+!!! note "Shell scripts live in the `prompt` column"
+    a `shell` node reads its script from the same `prompt` field an `ai` node uses for its task text.
 
 ## Common Node Fields
 

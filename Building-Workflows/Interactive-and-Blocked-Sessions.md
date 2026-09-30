@@ -12,7 +12,8 @@ Terminal streaming and input are authenticated with a short-lived, session-scope
 
 When an `ai` node hits something it genuinely cannot decide, the session flips to **blocked** and the prompt appears in the UI for a human (or a configured rule) to answer; answering resumes the run.
 
-> **Only the `AskUserQuestion` tool pauses a run:** a blocked session happens only if the agent calls the `AskUserQuestion` tool. Printing a question as prose does not pause anything - the session finalizes on the next Stop. The `session_automated` prompt is emphatic about this.
+!!! warning "Only the `AskUserQuestion` tool pauses a run"
+    a blocked session happens only if the agent calls the `AskUserQuestion` tool. Printing a question as prose does not pause anything - the session finalizes on the next Stop. The `session_automated` prompt is emphatic about this.
 
 `Session::NEEDS_REVIEW_STATUSES` is `blocked` plus `pending_approval`, and backs the "needs attention" surfaces in the dashboard.
 

@@ -105,7 +105,8 @@ The prompt has to say so explicitly. Do this:
 
 That last sentence matters. The default reading of "success" is "my task went fine," which is exactly backwards for a decision node, and an agent left to its own judgment will report success for a well-executed analysis that concluded "not flaky."
 
-> **The seed's print convention is outdated:** `db/seeds/flaky_test_workflow_nodes.rb` predates this. Its decision node asks the agent to print `SUCCESS` or `FAILURE` as the last line of output, which nothing reads. The graph shape in that seed is a good reference; the prompt convention is not.
+!!! warning "The seed's print convention is outdated"
+    `db/seeds/flaky_test_workflow_nodes.rb` predates this. Its decision node asks the agent to print `SUCCESS` or `FAILURE` as the last line of output, which nothing reads. The graph shape in that seed is a good reference; the prompt convention is not.
 
 ### Loops
 
