@@ -220,13 +220,13 @@ Nodes do not share a process. State moves between them through the workspace, gi
 
 ### Keep Credentials Out of the Agent Node
 
-Run the step that needs a credential (for example `git push`) in its own node, and give the `ai` node a profile that forwards no secrets. The agent then never holds the credential: it is not in the agent's session, so the agent cannot leak it, misuse it, or be talked into sending it somewhere.
+Run the step that needs a credential (for example `git push` with `GH_TOKEN`) in its own node, and leave that credential out of the `ai` node's `forward_env`. `GH_TOKEN` is then not in the agent's environment. This covers only the variables in `forward_env`: the host SSH agent, or `SSH_PRIVATE_KEY`, still reaches sessions (see [How CoiPond Uses Coi](../Internals/How-CoiPond-Uses-Coi.md)).
 
 For example, two profiles:
 
 ```toml
 # agent profile, used by the ai node
-# no forward_env, so no secret reaches this session
+# GH_TOKEN is not in forward_env
 [network]
 mode = "restricted"
 ```
@@ -242,7 +242,7 @@ allowed_domains = ["github.com", "api.github.com", "8.8.8.8", "1.1.1.1"]
 
 Then wire `ai` (make the change, commit in the workspace) -> `shell` (push the branch) on the push profile. The `allowlist` limits where the token can go even from the push node; see [Network Profiles](../Configuration/Network-Profiles.md).
 
-Both nodes share the workspace, so the push node acts on files the agent wrote. Keep it a fixed `shell` script with one narrow job, rather than a second `ai` node that follows instructions it finds in the workspace.
+Both nodes share the workspace, so the push node acts on files the agent wrote, and can run code the agent wrote (for example, git hooks in the clone). Keep it a fixed `shell` script with one narrow job, rather than a second `ai` node that follows instructions it finds in the workspace.
 
 ## Authoring
 
@@ -285,7 +285,7 @@ check.update!(on_success_node: handle_flaky, on_failure_node: report_consistent)
 
 ## Worked Shapes
 
-**Gate a risky change.** `trigger` -> `ai` (make the change) -> `shell` (run the suite) -> `approval` -> `ai` (open the PR). The suite's exit code routes, so a red build never reaches the human. Put `GH_TOKEN` in the profile on the last node only. See [Keep Credentials Out of the Agent Node](#keep-credentials-out-of-the-agent-node).
+**Gate a risky change.** `trigger` -> `ai` (make the change) -> `shell` (run the suite) -> `approval` -> `ai` (open the PR). The suite's exit code routes, so a red build never reaches the human. Put `GH_TOKEN` in the profile on the last node only.
 
 **Retry a flaky step.** `ai` node with `on_failure_node` pointing at itself, and `on_success_node` to the next step. Give it a `timeout_minutes` so a hung run gets killed rather than looping. If it crashes rather than reporting failure, the run halts for inspection.
 
