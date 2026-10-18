@@ -218,6 +218,32 @@ So access is decided by which profile a node picks, not by the workflow. Design 
 
 Nodes do not share a process. State moves between them through the workspace, git, or persistent storage (`persistent_storage_enabled`, mounted at `/storage`), never through variables.
 
+### Keep Credentials Out of the Agent Node
+
+Run the step that needs a credential (for example `git push`) in its own node, and give the `ai` node a profile that forwards no secrets. The agent then never holds the credential: it is not in the agent's session, so the agent cannot leak it, misuse it, or be talked into sending it somewhere.
+
+For example, two profiles:
+
+```toml
+# agent profile, used by the ai node
+# no forward_env, so no secret reaches this session
+[network]
+mode = "restricted"
+```
+
+```toml
+# push profile, used by the shell node that pushes
+forward_env = ["GH_TOKEN"]
+
+[network]
+mode = "allowlist"
+allowed_domains = ["github.com", "api.github.com", "8.8.8.8", "1.1.1.1"]
+```
+
+Then wire `ai` (make the change, commit in the workspace) -> `shell` (push the branch) on the push profile. The `allowlist` limits where the token can go even from the push node; see [Network Profiles](../Configuration/Network-Profiles.md).
+
+Both nodes share the workspace, so the push node acts on files the agent wrote. Keep it a fixed `shell` script with one narrow job, rather than a second `ai` node that follows instructions it finds in the workspace.
+
 ## Authoring
 
 Three doors, all writing the same rows.
@@ -259,7 +285,7 @@ check.update!(on_success_node: handle_flaky, on_failure_node: report_consistent)
 
 ## Worked Shapes
 
-**Gate a risky change.** `trigger` -> `ai` (make the change) -> `shell` (run the suite) -> `approval` -> `ai` (open the PR). The suite's exit code routes, so a red build never reaches the human. Put `GH_TOKEN` in the profile on the last node only.
+**Gate a risky change.** `trigger` -> `ai` (make the change) -> `shell` (run the suite) -> `approval` -> `ai` (open the PR). The suite's exit code routes, so a red build never reaches the human. Put `GH_TOKEN` in the profile on the last node only. See [Keep Credentials Out of the Agent Node](#keep-credentials-out-of-the-agent-node).
 
 **Retry a flaky step.** `ai` node with `on_failure_node` pointing at itself, and `on_success_node` to the next step. Give it a `timeout_minutes` so a hung run gets killed rather than looping. If it crashes rather than reporting failure, the run halts for inspection.
 
