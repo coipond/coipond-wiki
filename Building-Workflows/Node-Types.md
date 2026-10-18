@@ -43,7 +43,7 @@ Each type reports its outcome differently. An `ai` node writes a `task_done` mar
 
 These fields apply across node types and are set per node, so a credentialed step and a sandboxed step can live in the same graph.
 
-- **`coi_profile` / `incus_image`** - set per node. This is how a credentialed step and a sandboxed step live in the same graph.
+- **`coi_profile` / `incus_image`** - set per node. This is how a credentialed step and a sandboxed step live in the same graph. See [Keep Credentials Out of the Agent Node](Workflows.md#keep-credentials-out-of-the-agent-node).
 - **`timeout_minutes`** - set per node. This is the enforcement point that kills a long-running session.
 - **`run_once`** - the node fires only on its first successful run, recorded in `run_once_completed_at`. Useful for setup steps inside a loop.
 - **`continue_prompt`** - pushed into the container as a second prompt file, for persistent nodes.

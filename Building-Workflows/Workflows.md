@@ -218,6 +218,32 @@ So access is decided by which profile a node picks, not by the workflow. Design 
 
 Nodes do not share a process. State moves between them through the workspace, git, or persistent storage (`persistent_storage_enabled`, mounted at `/storage`), never through variables.
 
+### Keep Credentials Out of the Agent Node
+
+Run the step that needs a credential (for example `git push` with `GH_TOKEN`) in its own node, and leave that credential out of the `ai` node's `forward_env`. `GH_TOKEN` is then not in the agent's environment. This covers only the variables in `forward_env`: the host SSH agent, or `SSH_PRIVATE_KEY`, still reaches sessions (see [How CoiPond Uses Coi](../Internals/How-CoiPond-Uses-Coi.md)).
+
+For example, two profiles:
+
+```toml
+# agent profile, used by the ai node
+# GH_TOKEN is not in forward_env
+[network]
+mode = "restricted"
+```
+
+```toml
+# push profile, used by the shell node that pushes
+forward_env = ["GH_TOKEN"]
+
+[network]
+mode = "allowlist"
+allowed_domains = ["github.com", "api.github.com", "8.8.8.8", "1.1.1.1"]
+```
+
+Then wire `ai` (make the change, commit in the workspace) -> `shell` (push the branch) on the push profile. The `allowlist` limits where the token can go even from the push node; see [Network Profiles](../Configuration/Network-Profiles.md).
+
+Both nodes share the workspace, so the push node acts on files the agent wrote, and can run code the agent wrote (for example, git hooks in the clone). Keep it a fixed `shell` script with one narrow job, rather than a second `ai` node that follows instructions it finds in the workspace.
+
 ## Authoring
 
 Three doors, all writing the same rows.
