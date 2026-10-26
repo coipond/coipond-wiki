@@ -4,7 +4,7 @@ This page takes you from an empty machine to your first running workflow: what t
 
 ## Prerequisites
 
-CoiPond shells out to the **`coi`** binary for every container operation (it never talks to `incus` directly), so you need Incus and coi installed. coi needs Incus 6.1 or newer; Ubuntu ships 6.0.x, which is too old. coi's install script installs coi, and on Ubuntu/Debian it also installs Incus from the Zabbly repository:
+CoiPond shells out to the **`coi`** binary for every container operation (it never talks to `incus` directly), so you need Incus and coi installed. coi needs Incus 6.1 or newer; Ubuntu ships 6.0.x, which is too old. coi's install script installs coi. On Ubuntu/Debian, when Incus is missing or older than 6.1, it offers to install or upgrade Incus from the Zabbly repository. It asks first; an unattended run (no terminal, `CI=true` or `NONINTERACTIVE=1`) does this only with `COI_ASSUME_YES=1`:
 
 ```shell
 curl -fsSL https://raw.githubusercontent.com/coipond/coi/master/install.sh | bash   # coi (or grab a release binary)
