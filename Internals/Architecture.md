@@ -4,7 +4,7 @@ CoiPond is organized as a Rails application built from small, single-purpose obj
 
 ## Tech Stack
 
-CoiPond runs on Ruby 4.0, Rails 8.1, and PostgreSQL 18, with Solid Queue/Cache/Cable for background work and the Falcon web server. The front end pairs Hotwire with React 19 and xterm.js, styled with Tailwind CSS 4 and DaisyUI 5. Containers run via the [coi](https://github.com/mensfeld/code-on-incus) CLI (Incus plus tmux).
+CoiPond runs on Ruby 4.0, Rails 8.1, and PostgreSQL 18, with Solid Queue/Cache/Cable for background work and the Falcon web server. The front end pairs Hotwire with React 19 and xterm.js, styled with Tailwind CSS 4 and DaisyUI 5. Containers run via the [coi](https://github.com/coipond/coi) CLI (Incus plus tmux).
 
 The application is organized as a set of small, single-purpose objects under `app/concepts/` (a lightweight domain-driven layout), rather than fat models and service objects.
 

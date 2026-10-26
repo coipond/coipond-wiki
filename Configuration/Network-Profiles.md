@@ -4,7 +4,7 @@ Network access for a session's container is controlled by the `[network]` sectio
 
 There is no separate "network profile" object to manage; network policy is one part of the coi profile, alongside resource limits, security, mounts, and tool config.
 
-coi enforces the policy at the container's network layer (firewalld/nftables), so it holds regardless of what the agent tries to do.
+coi enforces the policy at the container's network layer (nftables), so it holds regardless of what the agent tries to do.
 
 ## Modes
 

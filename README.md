@@ -6,7 +6,7 @@ CoiPond is self-hosted infrastructure for orchestrating autonomous AI coding ses
 
 ## Reading the docs
 
-Start at [Home](Home). Every page links to its neighbors by bare page slug, which resolves in the rendered wiki.
+Start at [the landing page](index.md). Pages link to each other by relative `.md` path (for example `Getting-Started/Why-CoiPond.md`).
 
 ## Editing
 
@@ -15,6 +15,5 @@ Start at [Home](Home). Every page links to its neighbors by bare page slug, whic
 
 ## Layout
 
-- `Home.md` - the wiki landing page and table of contents.
-- `_Sidebar.md` - the navigation sidebar.
-- One Markdown file per page, named by its slug (for example `Getting-Started.md`).
+- `index.md` - the wiki landing page and table of contents.
+- One folder per section (for example `Getting-Started/`), with one Markdown file per page (for example `Getting-Started/Why-CoiPond.md`).

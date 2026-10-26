@@ -113,12 +113,12 @@ coi top --json [--procs]
 
 All of these are configured through the profile TOML (applied at `coi shell` launch), not separate post-boot flags:
 
-- **Network isolation** - firewalld/nftables enforcement from the profile's `[network]` section. Modes: open (no block), `restricted` (blocks RFC1918 plus metadata endpoint), `allowlist` (only `allowed_domains`). See [Network Profiles](../Configuration/Network-Profiles.md).
+- **Network isolation** - nftables enforcement from the profile's `[network]` section. Modes: open (no block), `restricted` (blocks RFC1918 plus metadata endpoint), `allowlist` (only `allowed_domains`). See [Network Profiles](../Configuration/Network-Profiles.md).
 - **SSH agent forwarding** - coi forwards the host `SSH_AUTH_SOCK` into the container as a proxy device; CoiPond falls back to a DB-stored key only when no host agent is available.
 - **Resource limits** - CPU / memory / disk I/O / max-processes / tmpfs, from the profile's `[limits.*]`.
 - **Security hardening** - coi read-only-mounts host-auto-executing sinks (`.claude/settings.json`, `.git/config`, `.husky`) so a contained agent cannot plant a payload the host later runs; the profile's `[security]` can add more protected paths.
 - **Git identity guard** - coi sets `user.useConfigOnly=true` so the agent cannot commit as the container's default user; CoiPond overlays the host git identity per session.
-- **Tool config** - `[tool]` (e.g. `name = "claude"`, `permission_mode`, model) is applied by coi as container-level env inherited by every exec, so the tool's model/permission settings come from the profile (requires coi with code-on-incus#745; the System Status page flags an out-of-date binary).
+- **Tool config** - `[tool]` (e.g. `name = "claude"`, `permission_mode`, model) is applied by coi as container-level env inherited by every exec, so the tool's model/permission settings come from the profile (requires coi with [#745](https://github.com/coipond/coi/pull/745); the System Status page flags an out-of-date binary).
 - **Timezone** - the host timezone is overlaid into the profile per session.
 
 ## CoiPond-Specific Logic
@@ -159,8 +159,8 @@ ENV["COI_BINARY_PATH"]  (default: "coi" on PATH)
 ## Deployment Requirements
 
 - **coi v0.12+** (see the version note in the README).
-- **Incus** (LXD) installed and configured.
-- **firewalld** installed and running (for network isolation).
+- **Incus** 6.1 or newer, installed and configured (see the coi [Linux Setup Guide](https://github.com/coipond/coi/wiki/Linux-Setup-Guide)).
+- **nftables** (`nft` plus passwordless sudo for it), for network isolation (see the coi [nftables Setup](https://github.com/coipond/coi/wiki/nftables-Setup)).
 - **SSH agent** on the host (optional, for SSH agent forwarding).
 
 ## Version History
