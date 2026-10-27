@@ -4,17 +4,16 @@ This page takes you from an empty machine to your first running workflow: what t
 
 ## Prerequisites
 
-CoiPond shells out to the **`coi`** binary for every container operation (it never talks to `incus` directly), so you need Incus/LXD and coi installed:
+CoiPond shells out to the **`coi`** binary for every container operation (it never talks to `incus` directly), so you need Incus and coi installed. coi needs Incus 6.1 or newer; Ubuntu ships 6.0.x, which is too old. coi's install script installs coi. On Ubuntu/Debian, when Incus is missing or older than 6.1, it offers to install or upgrade Incus from the Zabbly repository. It asks first; an unattended run (no terminal, `CI=true` or `NONINTERACTIVE=1`) does this only with `COI_ASSUME_YES=1`:
 
 ```shell
-sudo snap install lxd && sudo lxd init   # Incus/LXD
-cargo install coi                        # coi (or grab a release binary)
+curl -fsSL https://raw.githubusercontent.com/coipond/coi/master/install.sh | bash   # coi (or grab a release binary)
 ```
 
-Prebuilt binaries: [coi releases](https://github.com/mensfeld/code-on-incus/releases/latest). CoiPond runs `coi` from `PATH`; override with `COI_BINARY_PATH`.
+For other distros, or to set up Incus by hand, see the coi [Linux Setup Guide](https://github.com/coipond/coi/wiki/Linux-Setup-Guide). Prebuilt binaries: [coi releases](https://github.com/coipond/coi/releases/latest). CoiPond runs `coi` from `PATH`; override with `COI_BINARY_PATH`.
 
 !!! warning "Minimum coi version is `v0.12.0`"
-    or a `master` build that includes [#745](https://github.com/mensfeld/code-on-incus/pull/745). CoiPond relies on coi applying a profile's `[tool.*]` config - e.g. `[tool.claude] model` - as container-level env that our `coi container exec` inherits; on older coi it silently falls back to the tool default. The System Status page checks this and flags an out-of-date binary.
+    or a `master` build that includes [#745](https://github.com/coipond/coi/pull/745). CoiPond relies on coi applying a profile's `[tool.*]` config - e.g. `[tool.claude] model` - as container-level env that our `coi container exec` inherits; on older coi it silently falls back to the tool default. The System Status page checks this and flags an out-of-date binary.
 
 You also need **PostgreSQL 18**. For development, `docker compose up -d` starts one (database only; the app itself runs via `bin/dev`).
 

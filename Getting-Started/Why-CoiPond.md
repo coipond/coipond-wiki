@@ -33,7 +33,7 @@ A few concrete things people build with CoiPond, and how they map to workflow no
 - **Visual workflow editor** - a React canvas for wiring nodes together; workflows are stored as portable [CNCF Serverless Workflow](https://serverlessworkflow.io/) v1.0 documents.
 - **Parallel execution** - up to 10 executions per workflow at once, each in its own isolated container "lane" (slot); triggers over the limit queue until a slot frees.
 - **Autonomous *and* interactive sessions** - run an agent headless on a prompt, or drop into a live terminal and drive it yourself.
-- **Isolated by default** - every session runs in its own Incus container via [coi](https://github.com/mensfeld/code-on-incus); what gets mounted and how the network is locked down is decided per session by a **coi profile**.
+- **Isolated by default** - every session runs in its own Incus container via [coi](https://github.com/coipond/coi); what gets mounted and how the network is locked down is decided per session by a **coi profile**.
 - **Human-in-the-loop** - approval gates and blocked-session handling when an agent asks a question mid-run.
 - **Multi-machine ready** - scale from one box to a fleet of worker nodes sharing one database, with no change to how you author workflows.
 - **Live terminals and visibility** - real-time xterm.js terminal streaming over SSE, admin status and per-node resource views, and centralized error tracking.
