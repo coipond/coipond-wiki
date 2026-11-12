@@ -4,7 +4,7 @@ CoiPond runs every session inside a coi container and drives coi entirely throug
 
 ## Overview
 
-CoiPond uses coi v0.12+ as its container runtime layer. coi provides isolated Incus containers with built-in network isolation, SSH agent forwarding, resource limits, security hardening, and AI tool configuration.
+CoiPond uses coi v0.16+ as its container runtime layer. coi provides isolated Incus containers with built-in network isolation, SSH agent forwarding, resource limits, security hardening, and AI tool configuration.
 
 CoiPond drives coi entirely through the CLI (wrapped in `Containers::Commands`, `app/concepts/containers/commands.rb`) - it never talks to `incus` directly. A session's container is described by a per-session coi profile (TOML) and launched with `coi shell --profile`; coi applies the image, mounts, network policy, security hardening, git identity, timezone, and tool config from that profile in one step.
 
@@ -158,7 +158,7 @@ ENV["COI_BINARY_PATH"]  (default: "coi" on PATH)
 
 ## Deployment Requirements
 
-- **coi v0.12+** (see the version note in [Getting Started](../Getting-Started/index.md)).
+- **coi v0.16+** (see the version note in [Getting Started](../Getting-Started/index.md)).
 - **Incus** 6.1 or newer, installed and configured (see the coi [Linux Setup Guide](https://github.com/coipond/coi/wiki/Linux-Setup-Guide)).
 - **nftables** (`nft` plus passwordless sudo for it), for network isolation (see the coi [nftables Setup](https://github.com/coipond/coi/wiki/nftables-Setup)).
 - **SSH agent** on the host (optional, for SSH agent forwarding).
@@ -170,6 +170,7 @@ ENV["COI_BINARY_PATH"]  (default: "coi" on PATH)
 <tr><th>Date</th><th>Change</th></tr>
 </thead>
 <tbody>
+<tr><td>2026-11</td><td>coi v0.16+ required: profiles are checked against the coi v0.16.0 profile schema.</td></tr>
 <tr><td>2026-09</td><td>Rewritten for the profile-driven flow: <code>coi shell --profile</code>, per-session rendered profiles, <code>coi tool spec</code>; network/SSH/limits/tool config all expressed in the profile TOML. The standalone NetworkProfile model and the sandbox/privileged split were removed.</td></tr>
 <tr><td>2026-05</td><td>coi v0.8+: profiles, configure command, network enforcement, SSH forwarding, resource limits.</td></tr>
 <tr><td>2026-01</td><td>Original document: low-level container commands.</td></tr>

@@ -12,8 +12,8 @@ curl -fsSL https://raw.githubusercontent.com/coipond/coi/master/install.sh | bas
 
 For other distros, or to set up Incus by hand, see the coi [Linux Setup Guide](https://github.com/coipond/coi/wiki/Linux-Setup-Guide). Prebuilt binaries: [coi releases](https://github.com/coipond/coi/releases/latest). CoiPond runs `coi` from `PATH`; override with `COI_BINARY_PATH`.
 
-!!! warning "Minimum coi version is `v0.12.0`"
-    or a `master` build that includes [#745](https://github.com/coipond/coi/pull/745). CoiPond relies on coi applying a profile's `[tool.*]` config - e.g. `[tool.claude] model` - as container-level env that our `coi container exec` inherits; on older coi it silently falls back to the tool default. The System Status page checks this and flags an out-of-date binary.
+!!! warning "Minimum coi version is `v0.16.0`"
+    CoiPond checks profiles against the coi `v0.16.0` profile schema, and an older coi rejects profile keys its own schema does not know. The System Status page checks this: an older coi release shows as an error, a dev build off an older tag as a warning.
 
 You also need **PostgreSQL 18**. For development, `docker compose up -d` starts one (database only; the app itself runs via `bin/dev`).
 
