@@ -30,7 +30,7 @@ A few concrete things people build with CoiPond, and how they map to workflow no
 
 - **Trigger-based automation** - cron schedules, webhooks (generic JSON + per-trigger token URLs), workflow chaining, and manual triggers.
 - **Multi-step workflows** - pipelines of node types (AI task, shell, interactive, approval, sleep, sub-workflow call) with success/failure routing between steps.
-- **Visual workflow editor** - a React canvas for wiring nodes together; workflows are stored as portable [CNCF Serverless Workflow](https://serverlessworkflow.io/) v1.0 documents.
+- **Visual workflow editor** - a React canvas for wiring nodes together; workflows are stored as portable [CNCF Serverless Workflow](https://open-workflow-specification.org/) v1.0 documents.
 - **Parallel execution** - up to 10 executions per workflow at once, each in its own isolated container "lane" (slot); triggers over the limit queue until a slot frees.
 - **Autonomous *and* interactive sessions** - run an agent headless on a prompt, or drop into a live terminal and drive it yourself.
 - **Isolated by default** - every session runs in its own Incus container via [coi](https://github.com/coipond/coi); what gets mounted and how the network is locked down is decided per session by a **coi profile**.
