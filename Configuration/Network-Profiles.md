@@ -14,7 +14,7 @@ The `[network]` block supports three modes:
 - **restricted** - blocks RFC1918 private ranges (`10/8`, `172.16/12`, `192.168/16`) and the cloud metadata endpoint (`169.254.169.254`), but allows the public internet. Use it when a run needs the internet but must not reach your internal network.
 - **allowlist** - only the named domains are reachable; everything else is blocked. Best for credential-sensitive runs (it minimizes where a leaked token could be sent).
 
-coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode. It gets the mode of the profile it inherits from (`inherits`), if that one sets it; otherwise the mode of the merged coi config: the built-in `restricted`, then `~/.coi/config.toml`, then the workspace `.coi/config.toml` (which cannot set `open`), then the file `$COI_CONFIG` points at.
+coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode. It gets the mode of the profile it inherits from (`inherits`), if that one sets it; otherwise the mode of the merged coi config: the built-in `restricted`, overridden by `~/.coi/config.toml`, the file `$COI_CONFIG` points at, and the workspace `.coi/config.toml` (which cannot set `open`). Their order depends on how coi is started: with `-w` from another directory, the workspace config is applied last.
 
 ## Setting It
 
@@ -62,6 +62,6 @@ mode = "restricted"
 
 ## Notes
 
-- Network policy, like everything else in a coi profile, is applied when the session container is launched via `coi shell --profile`; there is no separate configuration step or in-workspace config file.
+- Network policy, like everything else in a coi profile, is applied when the session container is launched via `coi shell --profile`; there is no separate configuration step. The workspace `.coi/config.toml` can also set the mode (see [Modes](#modes)).
 - coi caches DNS resolutions for allowlist mode.
 - The seeded system profile ships **without** a `[network]` block, so it gets its mode from the coi config (see [Modes](#modes)); lock it down by assigning a stricter profile.
