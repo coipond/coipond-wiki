@@ -14,13 +14,13 @@ The `[network]` block supports three modes:
 - **restricted** - blocks RFC1918 private ranges (`10/8`, `172.16/12`, `192.168/16`) and the cloud metadata endpoint (`169.254.169.254`), but allows the public internet. Use it when a run needs the internet but must not reach your internal network.
 - **allowlist** - only the named domains are reachable; everything else is blocked. Best for credential-sensitive runs (it minimizes where a leaked token could be sent).
 
-coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode: it gets the mode of the host's coi config.
+coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode. It gets the mode of the profile it inherits from (`inherits`), if that one sets it; otherwise the mode of the merged coi config: the built-in `restricted`, then `~/.coi/config.toml`, then the workspace `.coi/config.toml` (which cannot set `open`), then the file `$COI_CONFIG` points at.
 
 ## Setting It
 
 Network policy lives in a coi profile, which you manage under **Coi Profiles** in the UI (or seed on disk). Two ways to apply a policy to a workflow:
 
-1. **Give the node a profile that has the `[network]` block you want.** Each workflow node can pick a coi profile; nodes that do not pick one fall back to the seeded **default** profile (no `[network]` block, so it gets the mode of the host's coi config).
+1. **Give the node a profile that has the `[network]` block you want.** Each workflow node can pick a coi profile; nodes that do not pick one fall back to the seeded **default** profile (no `[network]` block, so it gets its mode from the coi config, see [Modes](#modes)).
 2. **Edit the profile TOML directly** to add or change the `[network]` section, then assign that profile to the node(s).
 
 Because the whole profile is just TOML, you can keep a small library of profiles (for example an `open` profile and a locked-down `github-anthropic` allowlist profile) and pick the right one per node.
@@ -64,4 +64,4 @@ mode = "restricted"
 
 - Network policy, like everything else in a coi profile, is applied when the session container is launched via `coi shell --profile`; there is no separate configuration step or in-workspace config file.
 - coi caches DNS resolutions for allowlist mode.
-- The seeded system profile ships **without** a `[network]` block, so it gets the mode of the host's coi config; lock it down by assigning a stricter profile.
+- The seeded system profile ships **without** a `[network]` block, so it gets its mode from the coi config (see [Modes](#modes)); lock it down by assigning a stricter profile.
