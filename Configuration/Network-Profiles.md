@@ -14,7 +14,7 @@ The `[network]` block supports three modes:
 - **restricted** - blocks RFC1918 private ranges (`10/8`, `172.16/12`, `192.168/16`) and the cloud metadata endpoint (`169.254.169.254`), but allows the public internet. Use it when a run needs the internet but must not reach your internal network.
 - **allowlist** - only the named domains are reachable; everything else is blocked. Best for credential-sensitive runs (it minimizes where a leaked token could be sent).
 
-coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode. It gets the mode of the profile it inherits from (`inherits`), if that one sets it; otherwise the mode of the merged coi config: the built-in `restricted`, overridden by `~/.coi/config.toml`, the file `$COI_CONFIG` points at, and the workspace `.coi/config.toml` (which cannot set `open`). Their order depends on how coi is started: with `-w` from another directory, the workspace config is applied last.
+coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode. It gets the mode of the profile it inherits from (`inherits`), if that one sets it; otherwise the mode of the merged coi config: the built-in `restricted`, then `~/.coi/config.toml`, the current directory's `.coi/config.toml`, and the file `$COI_CONFIG` points at. When the workspace is not the current directory (`-w` or an alias), coi then applies the workspace's `.coi/config.toml` on top. A `.coi/config.toml` cannot set `open`.
 
 ## Setting It
 
