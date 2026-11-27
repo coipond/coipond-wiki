@@ -10,15 +10,17 @@ coi enforces the policy at the container's network layer (nftables), so it holds
 
 The `[network]` block supports three modes:
 
-- **open** - unrestricted access. This is coi's default, so a profile with **no `[network]` block** is open.
+- **open** - unrestricted access.
 - **restricted** - blocks RFC1918 private ranges (`10/8`, `172.16/12`, `192.168/16`) and the cloud metadata endpoint (`169.254.169.254`), but allows the public internet. Use it when a run needs the internet but must not reach your internal network.
 - **allowlist** - only the named domains are reachable; everything else is blocked. Best for credential-sensitive runs (it minimizes where a leaked token could be sent).
+
+coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode. It gets the mode of the profile it inherits from (`inherits`), if that one sets it; otherwise the mode of the merged coi config: the built-in `restricted`, then `~/.coi/config.toml`, the current directory's `.coi/config.toml`, and the file `$COI_CONFIG` points at. When the workspace is not the current directory (`-w` or an alias), coi then applies the workspace's `.coi/config.toml` on top. A project `.coi/config.toml` (current directory or workspace) cannot set `open`.
 
 ## Setting It
 
 Network policy lives in a coi profile, which you manage under **Coi Profiles** in the UI (or seed on disk). Two ways to apply a policy to a workflow:
 
-1. **Give the node a profile that has the `[network]` block you want.** Each workflow node can pick a coi profile; nodes that do not pick one fall back to the seeded **default** profile (which is open - no `[network]` block).
+1. **Give the node a profile that has the `[network]` block you want.** Each workflow node can pick a coi profile; nodes that do not pick one fall back to the seeded **default** profile (no `[network]` block, so it gets its mode from the coi config, see [Modes](#modes)).
 2. **Edit the profile TOML directly** to add or change the `[network]` section, then assign that profile to the node(s).
 
 Because the whole profile is just TOML, you can keep a small library of profiles (for example an `open` profile and a locked-down `github-anthropic` allowlist profile) and pick the right one per node.
@@ -60,6 +62,6 @@ mode = "restricted"
 
 ## Notes
 
-- Network policy, like everything else in a coi profile, is applied when the session container is launched via `coi shell --profile`; there is no separate configuration step or in-workspace config file.
+- Network policy, like everything else in a coi profile, is applied when the session container is launched via `coi shell --profile`; there is no separate configuration step. The workspace `.coi/config.toml` can also set the mode (see [Modes](#modes)).
 - coi caches DNS resolutions for allowlist mode.
-- The seeded system profile deliberately ships **without** a `[network]` block (open) so first runs work out of the box; lock it down by assigning a stricter profile.
+- The seeded system profile ships **without** a `[network]` block, so it gets its mode from the coi config (see [Modes](#modes)); lock it down by assigning a stricter profile.
