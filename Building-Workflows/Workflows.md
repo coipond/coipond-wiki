@@ -237,7 +237,7 @@ forward_env = ["GH_TOKEN"]
 
 [network]
 mode = "allowlist"
-allowed_domains = ["github.com", "api.github.com", "8.8.8.8", "1.1.1.1"]
+allowed_domains = ["github.com", "api.github.com"]
 ```
 
 Then wire `ai` (make the change, commit in the workspace) -> `shell` (push the branch) on the push profile. The `allowlist` limits where the token can go even from the push node; see [Network Profiles](../Configuration/Network-Profiles.md).
