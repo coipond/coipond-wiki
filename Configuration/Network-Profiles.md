@@ -4,14 +4,14 @@ Network access for a session's container is controlled by the `[network]` sectio
 
 There is no separate "network profile" object to manage; network policy is one part of the coi profile, alongside resource limits, security, mounts, and tool config.
 
-coi enforces the policy at the container's network layer (nftables), so it holds regardless of what the agent tries to do.
+coi enforces the policy at the container's network layer (nftables), so it holds regardless of what the agent tries to do. When coi cannot use nftables (see [Deployment Requirements](../Internals/How-CoiPond-Uses-Coi.md#deployment-requirements)), `restricted` and `allowlist` stop with an error; `open` starts the container anyway (see [Modes](#modes)).
 
 ## Modes
 
 The `[network]` block supports three modes:
 
-- **open** - unrestricted access, except cloud metadata endpoints (`169.254.0.0/16`), blocked by default (`block_metadata_endpoint = false` lifts it). coi blocks them only when it can apply nft rules (nftables plus passwordless sudo, and `use_sudo` not `false`); otherwise it warns and starts the container unblocked.
-- **restricted** - by default blocks private networks (RFC1918: `10/8`, `172.16/12`, `192.168/16`; and `100.64.0.0/10`, the CGNAT range where Tailscale, Headscale and NetBird number their peers) and cloud metadata endpoints (`169.254.0.0/16`), but allows the public internet. Use it when a run needs the internet but must not reach your internal network or tailnet.
+- **open** - unrestricted access, except cloud metadata endpoints (`169.254.0.0/16`). Set `block_metadata_endpoint = false` in `[network]` to reach them. When coi cannot use nftables, or `[network]` sets `use_sudo = false`, coi cannot block them: it starts the container and writes a warning to the `coi shell` session log.
+- **restricted** - blocks private networks (RFC1918 `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, and `100.64.0.0/10`, the CGNAT range where Tailscale, Headscale and NetBird number their peers) and cloud metadata endpoints (`169.254.0.0/16`), but allows the public internet. In `[network]`, `block_private_networks = false` or `allow_local_network_access = true` lifts the private-network block, and `block_metadata_endpoint = false` the metadata block. Use it when a run needs the internet but must not reach your internal network or those peers.
 - **allowlist** - only the named domains are reachable; everything else is blocked. Best for credential-sensitive runs (it minimizes where a leaked token could be sent).
 
 coi's built-in default is **restricted**. A profile with **no `[network]` block** does not set a mode. It gets the mode of the profile it inherits from (`inherits`), if that one sets it; otherwise the mode of the merged coi config: the built-in `restricted`, then `~/.coi/config.toml`, the current directory's `.coi/config.toml`, and the file `$COI_CONFIG` points at. When the workspace is not the current directory (`-w` or an alias), coi then applies the workspace's `.coi/config.toml` on top. A project `.coi/config.toml` (current directory or workspace) cannot set `open`.
