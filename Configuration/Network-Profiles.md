@@ -10,7 +10,7 @@ coi enforces the policy at the container's network layer (nftables), so it holds
 
 The `[network]` block supports three modes:
 
-- **open** - unrestricted access.
+- **open** - unrestricted access, except cloud metadata endpoints (`169.254.0.0/16`), blocked by default (`block_metadata_endpoint = false` lifts it).
 - **restricted** - by default blocks private networks (RFC1918: `10/8`, `172.16/12`, `192.168/16`; and `100.64.0.0/10`, the CGNAT range where Tailscale, Headscale and NetBird number their peers) and cloud metadata endpoints (`169.254.0.0/16`), but allows the public internet. Use it when a run needs the internet but must not reach your internal network or tailnet.
 - **allowlist** - only the named domains are reachable; everything else is blocked. Best for credential-sensitive runs (it minimizes where a leaked token could be sent).
 
